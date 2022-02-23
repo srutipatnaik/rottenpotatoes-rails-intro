@@ -7,7 +7,57 @@ class MoviesController < ApplicationController
   end
 
   def index
-        @movies = Movie.order(params[:sort_by])
+    #session.clear  
+    
+    if params[:redirect].nil? && params[:sort].nil? && params[:ratings].nil? && (!session[:sort].nil? || !session[:ratings].nil?)
+
+      redirect_to movies_path(:redirect => 1, :sort => session[:sort], :ratings => session[:ratings].each_with_object({}) { |k, h| h[k] = 1 })
+    
+    end
+
+    @movies = Movie.all
+    @ratings_to_show = []
+    @sort = nil
+    
+    #if session[:ratings] != nil
+	    #@ratings_to_show = session[:ratings]
+    #end
+
+    @page = params[:page]
+    #if @page != nil and session[:page] != nil
+    #        @page = session[:page]
+    #elsif @page == nil and session[:page] != nil
+    #	session[:page] = nil
+    #end
+
+    #if session[:sort] != nil
+	#    @sort = session[:sort]
+    #end
+
+    if params[:ratings] != nil
+	    @ratings_to_show = params[:ratings].keys
+	    @movies = Movie.with_ratings(@ratings_to_show)
+    elsif @page == nil
+    	    @ratings_to_show = []
+    else
+	    @movies = Movie.with_ratings(@ratings_to_show)
+    end
+    if session[:checkedin] == nil
+            @ratings_to_show = Movie.all_ratings
+	    session[:checkedin] = 1
+    end
+    @all_ratings = Movie.all_ratings
+    
+    if params[:sort] != nil
+	    @sort = params[:sort]
+    end
+    
+    if @sort != nil
+	    @movies = @movies.order("#{@sort} ASC")
+    end
+    
+    session[:sort] = @sort
+    session[:ratings] = @ratings_to_show
   end
 
   def new
