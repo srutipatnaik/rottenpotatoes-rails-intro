@@ -16,13 +16,13 @@
     <% @movies.each do |movie| %>
       <tr>
         <td>
-          <%= movie.title %>
+          <%= link_to movie.title %>
         </td>
         <td>
           <%= movie.rating %>
         </td>
         <td>
-          <%= movie.release_date %>
+          <%= link_to movie.release_date %>
         </td>
         <td>
           <%= link_to "More about #{movie.title}", movie_path(movie) %>
