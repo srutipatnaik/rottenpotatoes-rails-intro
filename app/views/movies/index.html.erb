@@ -6,9 +6,9 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th>Movie Title</th>
+      <th>link_to Movie Title</th>
       <th>Rating</th>
-      <th>Release Date</th>
+      <th>link_to Release Date</th>
       <th>More Info</th>
     </tr>
   </thead>
@@ -16,13 +16,13 @@
     <% @movies.each do |movie| %>
       <tr>
         <td>
-          <%= link_to movie.title %>
+          <%= movie.title %>
         </td>
         <td>
           <%= movie.rating %>
         </td>
         <td>
-          <%= link_to movie.release_date %>
+          <%= movie.release_date %>
         </td>
         <td>
           <%= link_to "More about #{movie.title}", movie_path(movie) %>
