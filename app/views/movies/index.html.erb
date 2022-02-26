@@ -1,21 +1,23 @@
 <!--  This file is app/views/movies/index.html.erb -->
 <h2>All Movies</h2>
 <%#  Part 1: Start here... %>
+
 <%= form_tag movies_path, :id => 'ratings_form', :method => :get do %>
   Include:
   <%- @uniq_movie_ratings.each do |rating| %>
    <%= rating %>
     <%= check_box_tag "ratings[#{rating}]", '', if @rating_check_box; @rating_check_box.include?(rating) end, :id => "ratings_#{rating}" %>
   <% end  %>
+  
   <%= submit_tag 'Refresh', :class => 'btn btn-primary', :id => "ratings_submit" %>
 <% end  %>
 
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th class="<%= 'hilite bg-warning' if params[:movie_sort] == 'title' %>"><%= link_to "Movie Title", movies_path(:movie_sort => 'title'), id: "title_header" %></th>
+      <th class="<%= 'hilite bg-warning' if params[ :movie_sort ] == 'title' %>"><%= link_to "Movie Title", movies_path(:movie_sort => 'title'), id: "title_header" %></th>
      
-      <!--<th class='hilite'> <%= link_to "Movie Title", movies_path(:movie_sort => "title"), id: "title_header", class: @sort_title %></th>-->
+      <!--<th class='hilite'> <%= link_to  "Movie Title",  movies_path( :movie_sort => "title"), id: "title_header", class: @sort_title  %></th>-->
       
       <th>Rating</th>
       
