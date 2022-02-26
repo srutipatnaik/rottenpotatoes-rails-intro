@@ -7,12 +7,12 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
-    @ratings = Movie.get_unique_ratings
-    @ratings_checks = @ratings
+    @uniq_movie_ratings = Movie.get_unique_movie_ratings
+    @rating_check_box = @uniq_movie_ratings
     
         
-    if params.key?(:sort)
-      session[:sort] = params[:sort]
+    if params.key?(:movie_sort)
+      session[:movie_sort] = params[:movie_sort]
     end
     
     if params.key?(:ratings)
@@ -21,20 +21,17 @@ class MoviesController < ApplicationController
     
     
     if session.key?(:ratings)
-      @ratings_checks = session[:ratings]
-      @movies = @movies.where(rating: @ratings_checks)
+      @rating_check_box = session[:ratings]
+      @movies = @movies.where(rating: @rating_check_box)
     end
     
     
-    if session[:sort] == 'title'
+    if session[:movie_sort] == 'title'
       @movies = @movies.order(:title)
-      @sort_title = 'p-3 mb-2 bg-warning text-blue'
-    elsif session[:sort] == 'release_date'
+    elsif session[:movie_sort] == 'release_date'
       @movies = @movies.order(:release_date)
-      @sort_date = 'p-3 mb-2 bg-warning text-blue'
     end
     
-    flash.keep
     
   end
 
