@@ -32,12 +32,7 @@ class MoviesController < ApplicationController
       @movies = @movies.order(:release_date)
     end
     
-    
   end
-
-
-
-
 
   def new
     # default: render 'new' template
